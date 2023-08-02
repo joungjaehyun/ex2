@@ -2,6 +2,7 @@ package org.zerock.ex2.controller;
 
 import java.util.Map;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class TodoController {
     return service.get(tno);
   }
 
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/list")
   public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO ) {
 
