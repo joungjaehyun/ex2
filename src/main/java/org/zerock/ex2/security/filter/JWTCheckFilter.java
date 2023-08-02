@@ -34,7 +34,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         // /api/todo/list /api/member/login
         String path = request.getRequestURI();
 
-        if (path.equals("/api/member/login")) {
+        if (path.equals("/api/member/")) {
             return true;
         }
 
