@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Data
 @ToString
+// UserDetails를 반환하기위한 Social Login했을때 반환 하기위한
 public class MemberDTO extends User implements OAuth2User {
 
     private String email;
@@ -41,17 +43,19 @@ public class MemberDTO extends User implements OAuth2User {
     }
 
     public Map<String, Object> getClaims() {
-
-        return Map.of(
-                "email", email,
-                "pw", pw,
-                "nickname", nickname,
-                "social", social,
-                "roleNames", roleNames);
+        // JWT 만들때 필요한 정보들만 넣어 놓는 메소드
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        map.put("pw", pw);
+        map.put("nickname", nickname);
+        map.put("social", social);
+        map.put("roleNames", roleNames);
+        
+        return map;
 
 
     }
-
+    // OAuth2User 처리시에 들어가는 메소드 
     @Override
     public Map<String, Object> getAttributes() {
         return null;

@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.zerock.ex2.security.handler.APILoginSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,7 +38,13 @@ public class CustomSecurityConfig {
         http.cors(config -> config.configurationSource(corsConfigurationSource()));
         http.csrf(config -> config.disable());
 
-        //세션/쿠키 사용 안함 api 서버에서 가장중요함
+        http.formLogin(config -> {
+            config.loginPage("/api/member/login");
+            // Successhandler 처리
+            config.successHandler(new APILoginSuccessHandler());
+        });
+
+        // 세션/쿠키 사용 안함 api 서버에서 가장중요함
         http.sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
