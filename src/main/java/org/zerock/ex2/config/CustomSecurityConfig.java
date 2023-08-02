@@ -10,9 +10,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.zerock.ex2.security.filter.JWTCheckFilter;
 import org.zerock.ex2.security.handler.APILoginSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,8 @@ public class CustomSecurityConfig {
 
         // 세션/쿠키 사용 안함 api 서버에서 가장중요함
         http.sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
