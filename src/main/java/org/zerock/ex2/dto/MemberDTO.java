@@ -56,6 +56,11 @@ public class MemberDTO extends User implements OAuth2User {
 
     }
     // OAuth2User 처리시에 들어가는 메소드 
+
+    public void setProps(Map<String,Object> map){
+        
+    }
+
     @Override
     public Map<String, Object> getAttributes() {
         return null;
